@@ -1,18 +1,6 @@
 {
   "name": "ShapedCore Entity Creator",
   "id": "1394804079517742583",
-  "api": "1.0.0",
   "main": "https://vaulkryn.github.io/ShapedCore_EntityCreator/dist/code.js",
-  "capabilities": [],
-  "enableProposedApi": false,
-  "documentAccess": "dynamic-page",
-  "editorType": [
-    "figma"
-  ],
-  "ui": "https://vaulkryn.github.io/ShapedCore_EntityCreator/ui.html",
-  "networkAccess": {
-    "allowedDomains": [
-      "none"
-    ]
-  }
+  "ui": "https://vaulkryn.github.io/ShapedCore_EntityCreator/ui.html"
 }
