@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+            overflow: auto;
+            flex-direction: column;
+            font-family: 'Comic Sans MS';
+            color: white;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            cursor: pointer;
+            color: white;
+            font-family: 'Comic Sans MS';
+            background: #2C2C2C;
+            padding: 4px;
+            width: 50%;
+        }
+
+        #button-wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        #entity-infos {
+            background: #3A3A3A;
+            border-bottom: 1px solid black;
+            height: 20%;
+            padding: 14px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #entity-config {
+            white-space: pre;
+            background: #505050;
+            border-bottom: 1px solid black;
+            height: 35%;
+            padding: 14px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #entity-data {
+            white-space: pre;
+            background: #505050;
+            border-bottom: 1px solid black;
+            height: 30%;
+            padding: 14px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        * {
+            scrollbar-color: #373636 #1B1B1B;
+            scrollbar-width: thin;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="entity-infos"></div>
+    <div id="entity-config"></div>
+    <div id="entity-data"></div>
+    <div id="button-wrapper">
+        <button id="copyConfig">Copier la configuration (.js)</button>
+        <button id="copyData">Copier les données (.json)</button>
+    </div>
+    <script>
+        window.onmessage = event => {
+            const { type, entityInfo, entityConfig, entityData } = event.data.pluginMessage;
+
+            if (type === 'entity-infos') {
+                document.getElementById('entity-infos').innerHTML = entityInfo;
+            } else if (type === 'entity-config') {
+                document.getElementById('entity-config').innerHTML = entityConfig;
+            } else if (type === 'entity-data') {
+                document.getElementById('entity-data').innerHTML = entityData;
+            } else if (type === 'copy') {
+                const textarea = document.createElement("textarea");
+                textarea.value = event.data.pluginMessage.text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                alert("Copié dans le presse-papiers");
+            }
+        };
+
+        document.getElementById('copyConfig').onclick = () => {
+            parent.postMessage({ pluginMessage: { type: 'copy-entity-config' } }, '*');
+        };
+
+        document.getElementById('copyData').onclick = () => {
+            parent.postMessage({ pluginMessage: { type: 'copy-entity-data' } }, '*');
+        };
+    </script>
+</body>
+
+</html>
